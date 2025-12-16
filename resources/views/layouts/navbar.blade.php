@@ -40,6 +40,6 @@
     <div class="md:hidden" id="mobile-menu" style="display:none;">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">หน้าแรก</a>
-            </div>
+        </div>
     </div>
 </nav>
