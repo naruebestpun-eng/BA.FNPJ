@@ -1,6 +1,9 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('แก้ไขผู้ใช้งาน') }}
+        </h2>
+    </x-slot>
 <div class="container mx-auto p-4">
     <h1 class="text-3xl font-bold mb-6 text-gray-800">แก้ไขผู้ใช้งาน: {{ $user->name }}</h1>
 
@@ -57,4 +60,4 @@
         </form>
     </div>
 </div>
-@endsection
+</x-app-layout>

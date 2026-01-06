@@ -74,4 +74,37 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
+    /**
+     * แสดงฟอร์มสำหรับสร้างผู้ใช้งานใหม่
+     */
+    public function create()
+    {
+        return view('users.create');
+    }
+
+    /**
+     * จัดการการบันทึกผู้ใช้งานใหม่เข้าสู่ฐานข้อมูล
+     */
+    public function store(Request $request)
+    {
+        // 1. Validation (การตรวจสอบข้อมูล)
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email', // ต้องไม่ซ้ำ
+            'password' => 'required|string|min:8|confirmed', // ต้องมีและยืนยันตรงกัน
+            'role' => 'required|in:admin,user',
+        ]);
+
+        // 2. การสร้างผู้ใช้งาน
+        User::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            // password ต้องถูกเข้ารหัส (Hash) ก่อนบันทึก
+            'password' => Hash::make($validatedData['password']),
+            'role' => $validatedData['role'],
+        ]);
+
+        // 3. Redirect กลับไปหน้า Index พร้อมข้อความสำเร็จ
+        return redirect()->route('users.index')->with('success', 'User created successfully.');
+    }
 }
