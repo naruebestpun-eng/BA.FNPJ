@@ -60,8 +60,6 @@
                 </div>
             </div>
         </div>
-
-<<<<<<< HEAD
         <div class="hidden md:hidden bg-gray-900 border-t border-gray-700 shadow-xl" id="mobile-menu">
             <div class="px-4 pt-4 pb-6 space-y-2">
                 <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-3 rounded-md text-base">หน้าแรก</a>
@@ -172,11 +170,3 @@
     </script>
 </body>
 </html>
-=======
-    <div class="md:hidden" id="mobile-menu" style="display:none;">
-        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">หน้าแรก</a>
-        </div>
-    </div>
-</nav>
->>>>>>> 703a3dfc3f40ff87f46aa626c8c22b774313f978
