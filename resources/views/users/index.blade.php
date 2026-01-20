@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 <div class="container mx-auto p-4">
-    <h1 class="text-3xl font-bold mb-6 text-gray-800">จัดการข้อมูลผู้ใช้งาน</h1>
+    
 
 <div class="flex justify-between items-center mb-6">
     <h1 class="text-3xl font-bold text-gray-800">จัดการข้อมูลผู้ใช้งาน</h1>
