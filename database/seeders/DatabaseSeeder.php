@@ -20,6 +20,14 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'password' => bcrypt('password'),
+        ]);
+
+        User::create([
+            'name' => 'Naruebest Pun',
+            'email' => 'naruebest.pun@rmutto.ac.th',
+            'password' => bcrypt('password123'),
+            'role' => '20',
         ]);
     }
 }
