@@ -22,12 +22,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // ส่วนการจัดการข้อมูล (Admin)
-    Route::resource('users', UserController::class);
-    Route::resource('classrooms', ClassroomController::class);
-    Route::resource('terms', TermController::class);
-    Route::resource('subjects', SubjectController::class);
-    Route::resource('students', StudentController::class);
+    // ส่วนการจัดการข้อมูล (Admin) — จำกัดด้วย AdminMiddleware
+    Route::middleware([\App\Http\Middleware\AdminMiddleware::class])->group(function () {
+        Route::resource('users', UserController::class);
+        Route::resource('classrooms', ClassroomController::class);
+        Route::resource('terms', TermController::class);
+        Route::resource('subjects', SubjectController::class);
+        Route::resource('students', App\Http\Controllers\AdminStudentController::class);
+    });
 
     // ส่วนของอาจารย์ (ถ้ามี Controller แล้วสามารถเปิดใช้ได้เลย)
     // Route::get('/instructor/subjects', [InstructorController::class, 'subjects'])->name('instructor.subjects');

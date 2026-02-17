@@ -14,7 +14,7 @@
                     </x-nav-link>
                 </div>
 
-                @if (auth()->user()->role == 'Administrator')
+                @if (auth()->user()->isAdministrator())
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
                         {{ __('บัญชีผู้ใช้') }}
@@ -42,25 +42,32 @@
                 </div>
                 @endif
 
-                @if (auth()->user()->role == 'Instructor')
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('attendance.index')" :active="request()->routeIs('attendance.*')">
-                        {{ __('บันทึกเวลาเรียน') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('instructor.subjects')" :active="request()->routeIs('instructor.subjects')">
-                        {{ __('เรียกดูวิชาที่สอน') }}
-                    </x-nav-link>
-                </div>
+                @if (auth()->user()->isInstructor())
+                    @if (Route::has('attendance.index'))
+                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <x-nav-link :href="route('attendance.index')" :active="request()->routeIs('attendance.*')">
+                                {{ __('บันทึกเวลาเรียน') }}
+                            </x-nav-link>
+                        </div>
+                    @endif
+
+                    @if (Route::has('instructor.subjects'))
+                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <x-nav-link :href="route('instructor.subjects')" :active="request()->routeIs('instructor.subjects')">
+                                {{ __('เรียกดูวิชาที่สอน') }}
+                            </x-nav-link>
+                        </div>
+                    @endif
                 @endif
 
-                @if (auth()->user()->role == 'Student')
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('student.report')" :active="request()->routeIs('student.report')">
-                        {{ __('รายงานสรุปผลการเข้าเรียน') }}
-                    </x-nav-link>
-                </div>
+                @if (auth()->user()->isStudent())
+                    @if (Route::has('student.report'))
+                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <x-nav-link :href="route('student.report')" :active="request()->routeIs('student.report')">
+                                {{ __('รายงานสรุปผลการเข้าเรียน') }}
+                            </x-nav-link>
+                        </div>
+                    @endif
                 @endif
             </div>
 

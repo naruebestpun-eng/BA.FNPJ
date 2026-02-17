@@ -41,6 +41,7 @@
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">รหัสนักศึกษา</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ชื่อ-นามสกุล</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">คณะ / สาขาวิชา</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ห้องเรียน</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">สถานะ</th>
                                 <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">จัดการ</th>
                             </tr>
@@ -57,6 +58,9 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         <div class="text-xs font-semibold">{{ $student->faculty }}</div>
                                         <div class="text-xs">{{ $student->field_of_study }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        {{ optional($student->classroom)->room_name ?? '-' }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         @if($student->active)
@@ -78,7 +82,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="px-6 py-10 text-center text-gray-500">
+                                    <td colspan="6" class="px-6 py-10 text-center text-gray-500">
                                         ไม่พบข้อมูลนักศึกษาที่ค้นหา
                                     </td>
                                 </tr>

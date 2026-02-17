@@ -7,6 +7,18 @@ use Illuminate\Http\Request;
 
 class ClassroomController extends Controller
 {
+    public function __construct()
+    {
+        // จำกัดให้เฉพาะผู้ดูแลระบบเท่านั้นเข้าถึงการจัดการห้องเรียน
+        $this->middleware(function ($request, $next) {
+            if (!can_admin()) {
+                abort(403);
+            }
+
+            return $next($request);
+        });
+    }
+
     /**
      * แสดงรายการห้องเรียนทั้งหมด
      */

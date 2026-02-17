@@ -8,20 +8,12 @@ $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
 use App\Models\User;
 
 try {
-    // Update password
-    $user = User::where('email', 'naruebest.pun@rmutto.ac.th')->first();
+    // Update password for all users
+    $newPassword = '123456';
+    $hash = bcrypt($newPassword);
+    $updated = User::query()->update(['password' => $hash]);
     
-    if (!$user) {
-        echo "✗ User not found\n";
-        exit(1);
-    }
-    
-    $newPassword = 'password123';
-    $user->password = bcrypt($newPassword);
-    $user->save();
-    
-    echo "✓ Password updated successfully!\n";
-    echo "Email: " . $user->email . "\n";
+    echo "✓ Password updated for {$updated} user(s)\n";
     echo "New Password: " . $newPassword . "\n";
     
 } catch (\Exception $e) {

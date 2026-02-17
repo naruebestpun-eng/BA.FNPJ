@@ -29,9 +29,9 @@
             <div class="mb-4">
                 <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
                 <select name="role" id="role" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                    <option value="Instructor" {{ old('role', $user->role) == 'Instructor' ? 'selected' : '' }}>Instructor</option>
-                    <option value="Student" {{ old('role', $user->role) == 'Student' ? 'selected' : '' }}>Student</option>
-                    <option value="Administrator" {{ old('role', $user->role) == 'Administrator' ? 'selected' : '' }}>Administrator</option>
+                    <option value="instructor" {{ old('role', (string)$user->role) == 'instructor' ? 'selected' : '' }}>Instructor</option>
+                    <option value="student" {{ old('role', (string)$user->role) == 'student' ? 'selected' : '' }}>Student</option>
+                    <option value="administrator" {{ old('role', (string)$user->role) == 'administrator' ? 'selected' : '' }}>Administrator</option>
                 </select>
                 @error('role') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
             </div>

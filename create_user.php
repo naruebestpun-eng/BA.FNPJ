@@ -21,13 +21,13 @@ try {
     $user = User::create([
         'name' => 'Naruebest Pun',
         'email' => 'naruebest.pun@rmutto.ac.th',
-        'password' => bcrypt('password123'),
+        'password' => bcrypt('123456'),
         'role' => '20',
     ]);
     
     echo "✓ User created successfully!\n";
     echo "Email: " . $user->email . "\n";
-    echo "Password: password123\n";
+    echo "Password: 123456\n";
     
 } catch (\Exception $e) {
     echo "✗ Error: " . $e->getMessage() . "\n";

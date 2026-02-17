@@ -2,63 +2,78 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Term;
 use Illuminate\Http\Request;
 
 class TermController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->middleware(function ($request, $next) {
+            if (!can_admin()) {
+                abort(403);
+            }
+            return $next($request);
+        });
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function index(Request $request)
+    {
+        $search = $request->input('search');
+
+        $terms = Term::query()
+            ->when($search, fn($q) => $q->where('name', 'like', "%{$search}%"))
+            ->orderBy('id', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('terms.index', compact('terms', 'search'));
+    }
+
     public function create()
     {
-        //
+        return view('terms.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'active' => 'nullable|boolean',
+        ]);
+
+        $validated['active'] = $request->has('active') ? (bool)$validated['active'] : true;
+
+        Term::create($validated);
+
+        return redirect()->route('terms.index')->with('success', 'สร้างภาคเรียนเรียบร้อยแล้ว');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Term $term)
     {
-        //
+        return view('terms.edit', compact('term'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, Term $term)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'active' => 'nullable|boolean',
+        ]);
+
+        $term->update($validated);
+
+        return redirect()->route('terms.index')->with('success', 'อัปเดตภาคเรียนเรียบร้อยแล้ว');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Term $term)
     {
-        //
-    }
+        $term->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('terms.index')->with('success', 'ลบภาคเรียนเรียบร้อยแล้ว');
     }
 }

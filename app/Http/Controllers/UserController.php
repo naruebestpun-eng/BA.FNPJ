@@ -9,6 +9,17 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        // เฉพาะผู้ดูแลระบบเท่านั้น
+        $this->middleware(function ($request, $next) {
+            if (!can_admin()) {
+                abort(403);
+            }
+            return $next($request);
+        })->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+    }
+
     /**
      * แสดงรายการผู้ใช้งาน, แบ่งหน้า 10 แถว และรองรับการค้นหา
      */
@@ -48,7 +59,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             // email ต้องไม่ซ้ำ ยกเว้น email เดิมของตัวเอง
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-            'role' => 'required|in:admin,user',
+            'role' => 'required|in:administrator,instructor,student',
             'password' => 'nullable|string|min:8|confirmed', // 'nullable' คือถ้าไม่กรอกก็ไม่ต้องเปลี่ยน
         ]);
 
@@ -92,7 +103,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email', // ต้องไม่ซ้ำ
             'password' => 'required|string|min:8|confirmed', // ต้องมีและยืนยันตรงกัน
-            'role' => 'required|in:admin,user',
+            'role' => 'required|in:administrator,instructor,student',
         ]);
 
         // 2. การสร้างผู้ใช้งาน

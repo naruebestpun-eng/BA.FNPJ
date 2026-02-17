@@ -39,14 +39,22 @@
                         <div class="h-6 w-px bg-gray-600 mx-2"></div>
 
                         <div class="flex items-center space-x-4">
-                            @auth
-                                <a href="{{ url('/dashboard') }}" class="text-white bg-indigo-600 hover:bg-indigo-700 px-5 py-2 rounded-full text-sm font-medium transition shadow-md">แดชบอร์ด</a>
-                            @else
+                            @if(request()->is('/'))
+                                {{-- หน้า Welcome ให้โชว์ปุ่ม เข้าสู่ระบบ / สมัครสมาชิก เสมอ (แม้ผู้ใช้จะล็อกอินอยู่) --}}
                                 <a href="{{ route('login') }}" class="text-gray-300 hover:text-white text-sm font-medium transition">เข้าสู่ระบบ</a>
                                 @if (Route::has('register'))
                                     <a href="{{ route('register') }}" class="bg-white text-gray-800 px-5 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition shadow-sm font-bold">สมัครสมาชิก</a>
                                 @endif
-                            @endauth
+                            @else
+                                @auth
+                                    <a href="{{ url('/dashboard') }}" class="text-white bg-indigo-600 hover:bg-indigo-700 px-5 py-2 rounded-full text-sm font-medium transition shadow-md">แดชบอร์ด</a>
+                                @else
+                                    <a href="{{ route('login') }}" class="text-gray-300 hover:text-white text-sm font-medium transition">เข้าสู่ระบบ</a>
+                                    @if (Route::has('register'))
+                                        <a href="{{ route('register') }}" class="bg-white text-gray-800 px-5 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition shadow-sm font-bold">สมัครสมาชิก</a>
+                                    @endif
+                                @endauth
+                            @endif
                         </div>
                     </div>
                 </div>
