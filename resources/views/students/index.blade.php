@@ -14,6 +14,12 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                 
+                @if(session('success'))
+                    <div class="mb-4 px-4 py-2 bg-green-100 text-green-800 rounded-md">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
                 <div class="mb-6">
                     <form method="GET" action="{{ route('students.index') }}" class="flex flex-col md:flex-row gap-4">
                         <div class="flex-1">
